@@ -1,5 +1,6 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+#include <vector>
 
 class Game
 {
@@ -8,6 +9,11 @@ private:
 	sf::Event ev;
 	sf::VideoMode videoMode;
 	sf::RectangleShape enemy;
+	std::vector<sf::RectangleShape> enemies;
+
+	int enemyTimer;
+	int enemyMaxTimer;
+	int maxEnemy;
 	
 public:
 	Game();
@@ -20,5 +26,11 @@ public:
 	bool IsOpen();
 
 	void Enemy(sf::Vector2f pos, sf::Vector2f size, sf::Color color);
+
+	void EnemySpawner();
+
+	void EnemyRenderer();
+
+	void EnemyMove();
 };
 

@@ -4,6 +4,8 @@
 Game::Game()
 {
 	window = nullptr;
+	enemyMaxTimer = 100;
+	maxEnemy = 5;
 }
 
 Game::~Game()
@@ -13,7 +15,7 @@ Game::~Game()
 void Game::Render()
 {
 	window->clear();
-	window->draw(enemy);
+	EnemyRenderer();
 	window->display();
 }
 
@@ -31,7 +33,10 @@ void Game::Event()
 }
 void Game::Update()
 {
-	std::cout << "Mouse x : " << sf::Mouse::getPosition(*window).x << std::endl << "Mouse y : " << sf::Mouse::getPosition(*window).y << std::endl;
+	EnemyMove();
+	EnemySpawner();
+	Event();
+	Render();
 }
 
 bool Game::IsOpen()
@@ -52,4 +57,36 @@ void Game::Enemy(sf::Vector2f pos, sf::Vector2f size, sf::Color color)
 	enemy.setPosition(pos);
 	enemy.setSize(size);
 	enemy.setFillColor(color);
+}
+
+void Game::EnemySpawner()
+{
+	std::cout << enemyTimer << std::endl;
+	if (enemies.size() < maxEnemy)
+	{
+		if (enemyTimer >= enemyMaxTimer)
+		{
+			Enemy(sf::Vector2f(5.f, 5.f), sf::Vector2f(60.f, 60.f), sf::Color::Green);
+			enemies.push_back(enemy);
+			enemyTimer = 0;
+		}
+		else
+			enemyTimer += 1;
+	}
+}
+
+void Game::EnemyRenderer()
+{
+	for (auto &item : enemies)
+	{
+		window->draw(item);
+	}
+}
+
+void Game::EnemyMove()
+{
+	for (auto &item : enemies)
+	{
+		item.move(sf::Vector2f(5.f,0.f));
+	}
 }
