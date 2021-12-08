@@ -7,13 +7,11 @@ int main()
 {
 	Game* game = new Game();
 
-	game->CreateWindow(640, 480,"Game");
+	game->CreateWindow(640, 480,"Game",60);
 
 	while (game->IsOpen())
 	{
 		game->Update();
-		game->Event();
-		game->Render();
 	}
 
 	return 0;
