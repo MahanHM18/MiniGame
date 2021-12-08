@@ -16,8 +16,8 @@ private:
 	int enemyMaxTimer;
 	int maxEnemy;
 
-	int mousePosWindow;
-	int mousePosView
+	sf::Vector2i mousePosWindow;
+	sf::Vector2f mousePosView;
 	
 public:
 	Game();
@@ -36,5 +36,7 @@ public:
 	void EnemyRenderer();
 
 	void EnemyMove();
+
+	void MouseUpdate();
 };
 

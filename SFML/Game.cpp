@@ -32,6 +32,7 @@ void Game::Event()
 }
 void Game::Update()
 {
+	MouseUpdate();
 	EnemyMove();
 	EnemySpawner();
 	Event();
@@ -76,6 +77,12 @@ void Game::EnemySpawner()
 	}
 }
 
+void Game::MouseUpdate()
+{
+	mousePosWindow = sf::Mouse::getPosition(*window);
+	mousePosView = window->mapPixelToCoords(mousePosWindow);
+}
+
 void Game::EnemyRenderer()
 {
 	for (auto& item : enemies)
@@ -84,10 +91,16 @@ void Game::EnemyRenderer()
 	}
 }
 
-void Game::EnemyMove()
-{
-	for (auto& item : enemies)
+void Game::EnemyMove(){
+
+	for (int i = 0; i < enemies.size(); i++)
 	{
-		item.move(sf::Vector2f(0.f, 4.f));
+		enemies[i].move(sf::Vector2f(0.f, 3.f));
+
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && enemies[i].getGlobalBounds().contains(mousePosView))
+		{
+			enemies.erase(enemies.begin() + i);
+		}
 	}
 }
+
