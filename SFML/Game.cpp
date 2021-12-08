@@ -1,11 +1,10 @@
 #include "Game.h"
-#include <iostream>
 
 Game::Game()
 {
 	window = nullptr;
-	enemyMaxTimer = 100;
-	maxEnemy = 5;
+	enemyMaxTimer = 40;
+	maxEnemy = 100;
 }
 
 Game::~Game()
@@ -52,22 +51,24 @@ void Game::CreateWindow(int width, int height, sf::String title, int limitFrame)
 	window->setFramerateLimit(limitFrame);
 }
 
-void Game::Enemy(sf::Vector2f pos, sf::Vector2f size, sf::Color color)
+void Game::EnemyAdd(sf::Vector2f pos, sf::Vector2f size, sf::Color color)
 {
 	enemy.setPosition(pos);
 	enemy.setSize(size);
 	enemy.setFillColor(color);
+	enemies.push_back(enemy);
 }
 
 void Game::EnemySpawner()
 {
-	std::cout << enemyTimer << std::endl;
 	if (enemies.size() < maxEnemy)
 	{
 		if (enemyTimer >= enemyMaxTimer)
 		{
-			Enemy(sf::Vector2f(5.f, 5.f), sf::Vector2f(60.f, 60.f), sf::Color::Green);
-			enemies.push_back(enemy);
+			EnemyAdd(sf::Vector2f(static_cast<float>(rand() % static_cast<int>(this->window->getSize().x - this->enemy.getSize().x)),
+				static_cast<float> (rand() % static_cast<int>(window->getSize().y - enemy.getSize().y))), sf::Vector2f(50.f, 50.f),
+				sf::Color::Green);
+			
 			enemyTimer = 0;
 		}
 		else
@@ -77,7 +78,7 @@ void Game::EnemySpawner()
 
 void Game::EnemyRenderer()
 {
-	for (auto &item : enemies)
+	for (auto& item : enemies)
 	{
 		window->draw(item);
 	}
@@ -85,8 +86,8 @@ void Game::EnemyRenderer()
 
 void Game::EnemyMove()
 {
-	for (auto &item : enemies)
+	for (auto& item : enemies)
 	{
-		item.move(sf::Vector2f(5.f,0.f));
+		item.move(sf::Vector2f(0.f, 4.f));
 	}
 }

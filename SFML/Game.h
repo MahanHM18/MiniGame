@@ -1,6 +1,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <ctime>
 
 class Game
 {
@@ -14,6 +15,9 @@ private:
 	int enemyTimer;
 	int enemyMaxTimer;
 	int maxEnemy;
+
+	int mousePosWindow;
+	int mousePosView
 	
 public:
 	Game();
@@ -25,7 +29,7 @@ public:
 	void CreateWindow(int width, int height,sf::String title,int limitFrame);
 	bool IsOpen();
 
-	void Enemy(sf::Vector2f pos, sf::Vector2f size, sf::Color color);
+	void EnemyAdd(sf::Vector2f pos, sf::Vector2f size, sf::Color color);
 
 	void EnemySpawner();
 
