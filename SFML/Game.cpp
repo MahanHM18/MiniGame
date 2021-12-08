@@ -85,6 +85,7 @@ void Game::EnemyRenderer()
 
 void Game::EnemyMove()
 {
+	//moving
 	for (auto &item : enemies)
 	{
 		item.move(sf::Vector2f(5.f,0.f));
